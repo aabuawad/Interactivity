@@ -1,0 +1,10 @@
+---
+title: "Interactivity"
+author: "Ahlam Abuawad"
+date: "11/1/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
