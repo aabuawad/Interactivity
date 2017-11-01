@@ -16,16 +16,29 @@ library(viridis)
 library(plotly)
 ```
 
-## Dataset
+## Dataset - cleaned and tidied
 
 ```{r}
 airbnb = read_csv("./data/nyc_airbnb.zip") %>% 
   clean_names() %>% 
   rename(boro = neighbourhood_group) %>% 
+  mutate(rating = review_scores_location / 2) %>% 
   filter(boro == "Manhattan",
          room_type == "Entire home/apt",
          price > 100 & price < 400)
-
 ```
 
+## Plotly Scatterplot
+
+```{r}
+airbnb %>% 
+  mutate(hover_text = str_c("Price: $", price, '\nRating: ', rating)) %>% #adding text that says price when someone hovers over the points, use /n = new line
+  plot_ly(x = ~longitude, y = ~latitude, color = ~price,
+          text = ~hover_text,
+          type = "scatter", mode = "marker", alpha = 0.5)
+```
+
+Scatter - can be taken as several plots such as glm, therefore add mode to add markers
+Can now interact with plot and zoom in on certain areas, pan, click, drag, etc. 
+Plotly plots embed automatically as a gglplot would
 
