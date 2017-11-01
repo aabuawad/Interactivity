@@ -73,3 +73,22 @@ scatter_ggplot = airbnb %>%
 
 ggplotly(scatter_ggplot)
 ```
+
+not as much hover control as plotly
+
+## ggplotly boxplot
+
+```{r}
+box_ggplot = 
+  inner_join(airbnb, common_neighborhoods,
+             by = "neighbourhood") %>% 
+  mutate(neighbourhood = fct_reorder(neighbourhood, price)) %>% 
+  ggplot(aes(x = neighbourhood, y = price, fill = neighbourhood)) +
+  geom_boxplot() +
+  theme_classic() + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplotly(box_ggplot)
+```
+
+
