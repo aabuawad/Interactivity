@@ -1,13 +1,13 @@
 ---
-title: "Interactivity"
-author: "Ahlam Abuawad"
-date: "11/1/2017"
-output: html_document
+title: "Airbnb Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
 ---
 
-### Load Libraries
-
-```{r_load_libraries}
+```{r setup, include=FALSE}
+library(flexdashboard)
 library(tidyverse)
 library(janitor)
 library(stringr)
@@ -15,8 +15,6 @@ library(forcats)
 library(viridis)
 library(plotly)
 ```
-
-## Dataset - cleaned and tidied
 
 ```{r}
 airbnb = read_csv("./data/nyc_airbnb.zip") %>% 
@@ -27,8 +25,12 @@ airbnb = read_csv("./data/nyc_airbnb.zip") %>%
          room_type == "Entire home/apt",
          price > 100 & price < 400)
 ```
+```
 
-## Plotly Scatterplot
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
 
 ```{r}
 airbnb %>% 
@@ -38,11 +40,10 @@ airbnb %>%
           type = "scatter", mode = "marker", alpha = 0.5)
 ```
 
-Scatter - can be taken as several plots such as glm, therefore add mode to add markers
-Can now interact with plot and zoom in on certain areas, pan, click, drag, etc. 
-Plotly plots embed automatically as a gglplot would
+Column {data-width=350}
+-----------------------------------------------------------------------
 
-## Plotly Boxplot
+### Chart B
 
 ```{r}
 airbnb %>% 
@@ -51,7 +52,7 @@ airbnb %>%
           type = "box", colors = "Set2")
 ```
 
-## Plotly Barchart
+### Chart C
 
 ```{r}
 airbnb %>% 
@@ -60,24 +61,4 @@ airbnb %>%
   plot_ly(x = ~neighbourhood, y = ~n, color = ~neighbourhood, 
           type = "bar")
 ```
-
-## ggplotly --> turns ggplot into interactive plot
-
-```{r}
-scatter_ggplot = airbnb %>%
-  ggplot(aes(x = longitude, y = latitude, color = price)) +
-  geom_point(alpha = 0.25) +
-  scale_color_viridis() +
-  coord_cartesian() +
-  theme_classic()
-
-ggplotly(scatter_ggplot)
-```
-
-not as much hover control as plotly
-
-## Dashboard
-
-create new R Markdown from template with flexdashboard option
-
 
