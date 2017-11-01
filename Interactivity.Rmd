@@ -42,3 +42,12 @@ Scatter - can be taken as several plots such as glm, therefore add mode to add m
 Can now interact with plot and zoom in on certain areas, pan, click, drag, etc. 
 Plotly plots embed automatically as a gglplot would
 
+## Plotly Boxplot
+
+```{r}
+airbnb %>% 
+  mutate(neighbourhood = fct_reorder(neighbourhood, price)) %>% 
+  plot_ly(x = ~neighbourhood, y = ~price, color = ~neighbourhood,
+          type = "box", colors = "Set2")
+```
+
