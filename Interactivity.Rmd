@@ -51,3 +51,25 @@ airbnb %>%
           type = "box", colors = "Set2")
 ```
 
+## Plotly Barchart
+
+```{r}
+airbnb %>% 
+  count(neighbourhood) %>% 
+  mutate(neighbourhood = fct_reorder(neighbourhood, n)) %>% 
+  plot_ly(x = ~neighbourhood, y = ~n, color = ~neighbourhood, 
+          type = "bar")
+```
+
+## ggplotly --> turns ggplot into interactive plot
+
+```{r}
+scatter_ggplot = airbnb %>%
+  ggplot(aes(x = longitude, y = latitude, color = price)) +
+  geom_point(alpha = 0.25) +
+  scale_color_viridis() +
+  coord_cartesian() +
+  theme_classic()
+
+ggplotly(scatter_ggplot)
+```
